@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.5)
 
 project(deep_cyber VERSION 0.0.0)
 
-add_library(${CMAKE_PROJECT_NAME} INTERFACE)
+add_library(${CMAKE_PROJECT_NAME} INTERFACE src/tensor.c)
 target_include_directories(${CMAKE_PROJECT_NAME} INTERFACE include)
 #target_link_libraries(${CMAKE_PROJECT_NAME} INTERFACE m)
 
@@ -37,4 +37,5 @@ add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/googletest-src
                  EXCLUDE_FROM_ALL)
 
 add_executable(${CMAKE_PROJECT_NAME}_test test/testmain.cpp)
-target_link_libraries(${CMAKE_PROJECT_NAME}_test gtest_main)
+target_include_directories(${CMAKE_PROJECT_NAME}_test INTERFACE include)
+target_link_libraries(${CMAKE_PROJECT_NAME}_test gtest_main ${CMAKE_PROJECT_NAME})
