@@ -34,7 +34,7 @@ void free_tensor(Tensor t) { free(t.data); }
 
 // general reshape function
 void reshape(Tensor *t, uint8_t a, uint8_t b, uint8_t c, uint8_t d) {
-  assert((t->a * t->b * t->c * t->d != a * b * c * d) &&
+  assert((t->a * t->b * t->c * t->d == a * b * c * d) &&
          "Error: Incompatible tensor shapes while reshaping!\n");
 
   t->a = a;
