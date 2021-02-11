@@ -1,31 +1,38 @@
 #include "../include/tensor.h"
 
+// general tensor creation function
 Tensor create_tensor(uint8_t a, uint8_t b, uint8_t c, uint8_t d) {
-    Tensor t;
-    t.a = a;
-    t.b = b;
-    t.c = c;
-    t.d = d;
-    t.data = (float *)malloc(a * b * c * d * sizeof(float));
-    return t;
+  Tensor t;
+  t.a = a;
+  t.b = b;
+  t.c = c;
+  t.d = d;
+  t.data = (float *)malloc(a * b * c * d * sizeof(float));
+  return t;
 }
 
+// 4D creation wrapper
 Tensor create_tensor4(uint8_t a, uint8_t b, uint8_t c, uint8_t d) {
   return create_tensor(a, b, c, d);
 }
 
+// 3D creation wrapper
 Tensor create_tensor3(uint8_t a, uint8_t b, uint8_t c) {
   return create_tensor(1, a, b, c);
 }
 
+// 2D creation wrapper
 Tensor create_tensor2(uint8_t a, uint8_t b) {
   return create_tensor(1, 1, a, b);
 }
 
+// 1D creation wrapper
 Tensor create_tensor1(uint8_t a) { return create_tensor(1, 1, 1, a); }
 
+// frees tensor dataa
 void free_tensor(Tensor t) { free(t.data); }
 
+// general reshape function
 void reshape(Tensor *t, uint8_t a, uint8_t b, uint8_t c, uint8_t d) {
   assert((t->a * t->b * t->c * t->d != a * b * c * d) &&
          "Error: Incompatible tensor shapes while reshaping!\n");
@@ -36,30 +43,39 @@ void reshape(Tensor *t, uint8_t a, uint8_t b, uint8_t c, uint8_t d) {
   t->d = d;
 }
 
-void reshape1(Tensor *t, uint8_t a) { reshape(t, 1, 1, 1, a); }
-
-void reshape2(Tensor *t, uint8_t a, uint8_t b) { reshape(t, 1, 1, a, b); }
-
-void reshape3(Tensor *t, uint8_t a, uint8_t b, uint8_t c) {
-  reshape(t, 1, a, b, c);
-}
-
+// 4D reshape wrapper
 void reshape4(Tensor *t, uint8_t a, uint8_t b, uint8_t c, uint8_t d) {
   reshape(t, a, b, c, d);
 }
 
+// 3D reshape wrapper
+void reshape3(Tensor *t, uint8_t a, uint8_t b, uint8_t c) {
+  reshape(t, 1, a, b, c);
+}
+
+// 2D reshape wrapper
+void reshape2(Tensor *t, uint8_t a, uint8_t b) { reshape(t, 1, 1, a, b); }
+
+// 1D reshape wrapper
+void reshape1(Tensor *t, uint8_t a) { reshape(t, 1, 1, 1, a); }
+
+// general indexing function
 float *at(Tensor *t, uint8_t a, uint8_t b, uint8_t c, uint8_t d) {
   return &t->data[a * t->b * t->c * t->d + b * t->c * t->d + c * t->d + d];
 }
 
-float *at1(Tensor *t, uint8_t a) { return at(t, 1, 1, 1, a); }
+// 4D indexing wrapper
+float *at4(Tensor *t, uint8_t a, uint8_t b, uint8_t c, uint8_t d) {
+  return at(t, a, b, c, d);
+}
 
-float *at2(Tensor *t, uint8_t a, uint8_t b) { return at(t, 1, 1, a, b); }
-
+// 3D indexing wrapper
 float *at3(Tensor *t, uint8_t a, uint8_t b, uint8_t c) {
   return at(t, 1, a, b, c);
 }
 
-float *at4(Tensor *t, uint8_t a, uint8_t b, uint8_t c, uint8_t d) {
-  return at(t, a, b, c, d);
-}
+// 2D indexing wrapper
+float *at2(Tensor *t, uint8_t a, uint8_t b) { return at(t, 1, 1, a, b); }
+
+// 1D indexing wrapper
+float *at1(Tensor *t, uint8_t a) { return at(t, 1, 1, 1, a); }
