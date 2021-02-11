@@ -9,7 +9,7 @@ extern "C" {
 #include <stdint.h>
 #include <stdlib.h>
 
-typedef struct Tensor {
+typedef struct {
   uint8_t a, b, c, d;
   float *data;
 } Tensor;

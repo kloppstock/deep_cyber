@@ -1,22 +1,28 @@
 #include "../include/tensor.h"
 
 Tensor create_tensor(uint8_t a, uint8_t b, uint8_t c, uint8_t d) {
-  return {a, b, c, d, (float *)malloc(a * b * c * d * sizeof(float))};
+    Tensor t;
+    t.a = a;
+    t.b = b;
+    t.c = c;
+    t.d = d;
+    t.data = (float *)malloc(a * b * c * d * sizeof(float));
+    return t;
 }
 
 Tensor create_tensor4(uint8_t a, uint8_t b, uint8_t c, uint8_t d) {
-  return create_tensor4(a, b, c, d);
+  return create_tensor(a, b, c, d);
 }
 
 Tensor create_tensor3(uint8_t a, uint8_t b, uint8_t c) {
-  return create_tensor4(1, a, b, c);
+  return create_tensor(1, a, b, c);
 }
 
 Tensor create_tensor2(uint8_t a, uint8_t b) {
-  return create_tensor4(1, 1, a, b);
+  return create_tensor(1, 1, a, b);
 }
 
-Tensor create_tensor1(uint8_t a) { return create_tensor4(1, 1, 1, a); }
+Tensor create_tensor1(uint8_t a) { return create_tensor(1, 1, 1, a); }
 
 void free_tensor(Tensor t) { free(t.data); }
 
