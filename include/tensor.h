@@ -13,7 +13,7 @@ extern "C" {
  * \brief Tensor struct. Holds a Tensor with (a, b, c, d) dimensions.
  */
 typedef struct {
-  uint8_t a, b, c, d;
+  uint16_t a, b, c, d;
   float *data;
 } Tensor;
 
@@ -25,7 +25,7 @@ typedef struct {
  * \param d Fourth dimension.
  * \return The tensor.
  */
-Tensor create_tensor(uint8_t a, uint8_t b, uint8_t c, uint8_t d);
+Tensor create_tensor(uint16_t a, uint16_t b, uint16_t c, uint16_t d);
 
 /*!
  * \brief Creates a 4D tensor.
@@ -35,7 +35,7 @@ Tensor create_tensor(uint8_t a, uint8_t b, uint8_t c, uint8_t d);
  * \param d Fourth dimension.
  * \return The tensor.
  */
-Tensor create_tensor4(uint8_t a, uint8_t b, uint8_t c, uint8_t d);
+Tensor create_tensor4(uint16_t a, uint16_t b, uint16_t c, uint16_t d);
 
 /*!
  * \brief Creates a 3D tensor.
@@ -44,7 +44,7 @@ Tensor create_tensor4(uint8_t a, uint8_t b, uint8_t c, uint8_t d);
  * \param c Third dimension.
  * \return The tensor.
  */
-Tensor create_tensor3(uint8_t a, uint8_t b, uint8_t c);
+Tensor create_tensor3(uint16_t a, uint16_t b, uint16_t c);
 
 /*!
  * \brief Creates a 2D tensor.
@@ -52,14 +52,14 @@ Tensor create_tensor3(uint8_t a, uint8_t b, uint8_t c);
  * \param b Second dimension.
  * \return The tensor.
  */
-Tensor create_tensor2(uint8_t a, uint8_t b);
+Tensor create_tensor2(uint16_t a, uint16_t b);
 
 /*!
  * \brief Creates a 1D tensor.
  * \param a First dimension.
  * \return The tensor.
  */
-Tensor create_tensor1(uint8_t a);
+Tensor create_tensor1(uint16_t a);
 
 /*!
  * \brief Frees a tensor.
@@ -75,7 +75,7 @@ void free_tensor(Tensor t);
  * \param c Third dimension.
  * \param d Fourth dimension.
  */
-void reshape(Tensor *t, uint8_t a, uint8_t b, uint8_t c, uint8_t d);
+void reshape(Tensor *t, uint16_t a, uint16_t b, uint16_t c, uint16_t d);
 
 /*!
  * \brief Reshapes a 4D tensor.
@@ -85,7 +85,7 @@ void reshape(Tensor *t, uint8_t a, uint8_t b, uint8_t c, uint8_t d);
  * \param c Third dimension.
  * \param d Fourth dimension.
  */
-void reshape4(Tensor *t, uint8_t a, uint8_t b, uint8_t c, uint8_t d);
+void reshape4(Tensor *t, uint16_t a, uint16_t b, uint16_t c, uint16_t d);
 
 /*!
  * \brief Reshapes a 3D tensor.
@@ -94,7 +94,7 @@ void reshape4(Tensor *t, uint8_t a, uint8_t b, uint8_t c, uint8_t d);
  * \param b Second dimension.
  * \param c Third dimension.
  */
-void reshape3(Tensor *t, uint8_t a, uint8_t b, uint8_t c);
+void reshape3(Tensor *t, uint16_t a, uint16_t b, uint16_t c);
 
 /*!
  * \brief Reshapes a 2D tensor.
@@ -102,14 +102,14 @@ void reshape3(Tensor *t, uint8_t a, uint8_t b, uint8_t c);
  * \param a First dimension.
  * \param b Second dimension.
  */
-void reshape2(Tensor *t, uint8_t a, uint8_t b);
+void reshape2(Tensor *t, uint16_t a, uint16_t b);
 
 /*!
  * \brief Reshapes a 1D tensor.
  * \param t The input tensor.
  * \param a First dimension.
  */
-void reshape1(Tensor *t, uint8_t a);
+void reshape1(Tensor *t, uint16_t a);
 
 /*!
  * \brief 4D Tensor indexing function.
@@ -120,7 +120,7 @@ void reshape1(Tensor *t, uint8_t a);
  * \param d The index in the fourth dimension.
  * \return A pointer to the requested Element.
  */
-float *at(Tensor *t, uint8_t a, uint8_t b, uint8_t c, uint8_t d);
+float *at(Tensor *t, uint16_t a, uint16_t b, uint16_t c, uint16_t d);
 
 /*!
  * \brief 4D Tensor indexing function.
@@ -131,7 +131,7 @@ float *at(Tensor *t, uint8_t a, uint8_t b, uint8_t c, uint8_t d);
  * \param d The index in the fourth dimension.
  * \return A pointer to the requested Element.
  */
-float *at4(Tensor *t, uint8_t a, uint8_t b, uint8_t c, uint8_t d);
+float *at4(Tensor *t, uint16_t a, uint16_t b, uint16_t c, uint16_t d);
 
 /*!
  * \brief 3D Tensor indexing function.
@@ -141,7 +141,7 @@ float *at4(Tensor *t, uint8_t a, uint8_t b, uint8_t c, uint8_t d);
  * \param c The index in the third dimension.
  * \return A pointer to the requested Element.
  */
-float *at3(Tensor *t, uint8_t a, uint8_t b, uint8_t c);
+float *at3(Tensor *t, uint16_t a, uint16_t b, uint16_t c);
 
 /*!
  * \brief 2D Tensor indexing function.
@@ -150,7 +150,7 @@ float *at3(Tensor *t, uint8_t a, uint8_t b, uint8_t c);
  * \param b The index in the second dimension.
  * \return A pointer to the requested Element.
  */
-float *at2(Tensor *t, uint8_t a, uint8_t b);
+float *at2(Tensor *t, uint16_t a, uint16_t b);
 
 /*!
  * \brief 1D Tensor indexing function.
@@ -158,7 +158,7 @@ float *at2(Tensor *t, uint8_t a, uint8_t b);
  * \param a The index in the first dimension.
  * \return A pointer to the requested Element.
  */
-float *at1(Tensor *t, uint8_t a);
+float *at1(Tensor *t, uint16_t a);
 
 #ifdef __cplusplus
 }
