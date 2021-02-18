@@ -1,8 +1,11 @@
 #include "../include/conv2d.h"
 #include <assert.h>
 
+#include <stdio.h>
+
+// general 2D convolution
 Tensor conv2d(Tensor X, Tensor w, Tensor b, uint16_t stride_rows,
-              uint16_t stride_cols, uint16_t padding, uint16_t groups) {
+              uint16_t stride_cols, uint8_t padding, uint16_t groups) {
   // extract parameters
   uint16_t kernel_rows = w.a;
   uint16_t kernel_cols = w.b;
@@ -15,11 +18,6 @@ Tensor conv2d(Tensor X, Tensor w, Tensor b, uint16_t stride_rows,
   uint16_t channels_in_ = X.d;
 
   uint grouped_channels_out = channels_out / groups;
-
-  assert((channels_in * groups == channels_in_) &&
-         "Error: Invalid number of groups or input channels in Conv2D!\n");
-  assert((channels_out % groups == 0) &&
-         "Error: Invalid number of groups in Conv2D!\n");
 
   // same padding
   if (padding) {

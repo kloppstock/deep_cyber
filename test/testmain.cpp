@@ -1,4 +1,5 @@
 #include "../include/tensor.h"
+#include "../include/conv2d.h"
 #include <gtest/gtest.h>
 
 /*
@@ -74,6 +75,13 @@ TEST(TensorTest, create_tensor1Test) {
     EXPECT_NO_FATAL_FAILURE(t.data[i] = 12.8f);
 
   free_tensor(t);
+}
+
+// free empty tensor
+TEST(TensorTest, free_tensorTest) {
+  Tensor t;
+  t.data = NULL;
+  EXPECT_NO_FATAL_FAILURE(free_tensor(t));
 }
 
 // reshape
@@ -170,6 +178,30 @@ TEST(TensorTest, atTest) {
   free_tensor(t);
 }
 
+TEST(TensorTest, atContentsTest) {
+  uint8_t a = 1;
+  uint8_t b = 2;
+  uint8_t c = 3;
+  uint8_t d = 4;
+
+  Tensor t = create_tensor(a, b, c, d);
+
+  float i = 0.f;
+
+  for (uint8_t ai = 0; ai < a; ++ai)
+    for (uint8_t bi = 0; bi < b; ++bi)
+      for (uint8_t ci = 0; ci < c; ++ci)
+        for (uint8_t di = 0; di < d; ++di)
+          *at(&t, ai, bi, ci, di) = i++;
+
+  i = 0;
+
+  for (uint16_t j = 0; j < a * b * c * d; ++j)
+    EXPECT_EQ(t.data[j], i++);
+
+  free_tensor(t);
+}
+
 TEST(TensorTest, at4Test) {
   uint8_t a = 1;
   uint8_t b = 2;
@@ -258,6 +290,40 @@ TEST(TensorTest, at1Test) {
     EXPECT_EQ(*at1(&t, ai), i++);
 
   free_tensor(t);
+}
+
+/*
+ * Conv2D tests
+ */
+
+TEST(TensorTest, conv2dEmptyTest) {
+    // define input dimensions
+
+    uint16_t a = 2;
+    uint16_t b = 128;
+    uint16_t c = 128;
+    uint16_t d = 4;
+    uint16_t filters = 5;
+    uint16_t stride_cols = 2;
+    uint16_t stride_rows = 2;
+    uint16_t kernel_cols = 3;
+    uint16_t kernel_rows = 3;
+    uint16_t groups = 1;
+    uint8_t padding = 0;
+
+    // create input tensors
+  Tensor X = create_tensor(a, b, c, d);
+  Tensor weights = create_tensor(kernel_rows, kernel_cols, d, filters);
+  Tensor bias = create_tensor1(filters);
+
+  // conv2d
+  Tensor out = conv2d(X, weights, bias, stride_rows, stride_cols, padding, groups);
+
+  // free input and output tensors
+  free_tensor(X);
+  free_tensor(weights);
+  free_tensor(bias);
+  free_tensor(out);
 }
 
 int main(int argc, char *argv[]) {

@@ -1,6 +1,10 @@
 #ifndef CONV2D_H
 #define CONV2D_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "tensor.h"
 
 /*!
@@ -15,6 +19,10 @@
  * \return The output tensor.
  */
 Tensor conv2d(Tensor X, Tensor w, Tensor b, uint16_t stride_rows,
-              uint16_t stride_cols, uint16_t padding, uint16_t groups);
+              uint16_t stride_cols, uint8_t padding, uint16_t groups);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // CONV2D_H

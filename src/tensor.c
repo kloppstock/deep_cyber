@@ -11,7 +11,7 @@ Tensor create_tensor(uint16_t a, uint16_t b, uint16_t c, uint16_t d) {
   return t;
 }
 
-// 4D creation wrapper
+// 4D creation wra1per
 Tensor create_tensor4(uint16_t a, uint16_t b, uint16_t c, uint16_t d) {
   return create_tensor(a, b, c, d);
 }
@@ -30,7 +30,10 @@ Tensor create_tensor2(uint16_t a, uint16_t b) {
 Tensor create_tensor1(uint16_t a) { return create_tensor(1, 1, 1, a); }
 
 // frees tensor dataa
-void free_tensor(Tensor t) { free(t.data); }
+void free_tensor(Tensor t) {
+  if (t.data)
+    free(t.data);
+}
 
 // general reshape function
 void reshape(Tensor *t, uint16_t a, uint16_t b, uint16_t c, uint16_t d) {
@@ -71,11 +74,11 @@ float *at4(Tensor *t, uint16_t a, uint16_t b, uint16_t c, uint16_t d) {
 
 // 3D indexing wrapper
 float *at3(Tensor *t, uint16_t a, uint16_t b, uint16_t c) {
-  return at(t, 1, a, b, c);
+  return at(t, 0, a, b, c);
 }
 
 // 2D indexing wrapper
-float *at2(Tensor *t, uint16_t a, uint16_t b) { return at(t, 1, 1, a, b); }
+float *at2(Tensor *t, uint16_t a, uint16_t b) { return at(t, 0, 0, a, b); }
 
 // 1D indexing wrapper
-float *at1(Tensor *t, uint16_t a) { return at(t, 1, 1, 1, a); }
+float *at1(Tensor *t, uint16_t a) { return at(t, 0, 0, 0, a); }
