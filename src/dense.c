@@ -1,8 +1,6 @@
 #include "../include/deep_cyber.h"
 #include <assert.h>
 
-#include <stdio.h>
-
 /* general dense layer implementation */
 Tensor dense(Tensor X, Tensor w, Tensor b) {
   /* extract parameters */
@@ -10,10 +8,6 @@ Tensor dense(Tensor X, Tensor w, Tensor b) {
   unsigned int size = X.d;
   unsigned int w_s = w.c;
   unsigned int units = w.d;
-
-
-  printf("%d, %d, %d, %d\n", batches, size, w_s, units);
-
 
   Tensor out = create_tensor2(batches, units);
 

@@ -2,8 +2,9 @@ cmake_minimum_required(VERSION 3.5)
 
 project(deep_cyber VERSION 0.0.0)
 
-add_library(${CMAKE_PROJECT_NAME} SHARED src/tensor.c include/tensor.h include/deep_cyber.h src/conv2d.c src/dense.c)
+add_library(${CMAKE_PROJECT_NAME} SHARED src/tensor.c include/tensor.h include/deep_cyber.h src/conv2d.c src/dense.c src/activation.c)
 target_include_directories(${CMAKE_PROJECT_NAME} INTERFACE include)
+target_link_libraries(${CMAKE_PROJECT_NAME} m)
 
 add_executable(${CMAKE_PROJECT_NAME}_main main.c)
 target_include_directories(${CMAKE_PROJECT_NAME}_main INTERFACE include)

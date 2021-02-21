@@ -372,6 +372,7 @@ TEST(Conv2DTest, bigConv2dEmptyTest) {
 /*
  * Dense tests
  */
+
 TEST(DenseTest, denseEmptyTest) {
   // define input dimensions
 
@@ -384,14 +385,68 @@ TEST(DenseTest, denseEmptyTest) {
   Tensor weights = create_tensor2(size, units);
   Tensor bias = create_tensor1(units);
 
-  // conv2d
-  Tensor out =
-      dense(X, weights, bias);
+  // dense
+  Tensor out = dense(X, weights, bias);
 
   // free input and output tensors
   free_tensor(X);
   free_tensor(weights);
   free_tensor(bias);
+  free_tensor(out);
+}
+
+/*
+ * Activation tests
+ */
+
+TEST(ActivationTest, reluEmptyTest) {
+  // define input dimensions
+
+  unsigned int batches = 5;
+  unsigned int size = 256;
+
+  // create input tensors
+  Tensor X = create_tensor2(batches, size);
+
+  // relu
+  Tensor out = relu(X);
+
+  // free input and output tensors
+  free_tensor(X);
+  free_tensor(out);
+}
+
+TEST(ActivationTest, sigmoidEmptyTest) {
+  // define input dimensions
+
+  unsigned int batches = 5;
+  unsigned int size = 256;
+
+  // create input tensors
+  Tensor X = create_tensor2(batches, size);
+
+  // relu
+  Tensor out = sigmoid(X);
+
+  // free input and output tensors
+  free_tensor(X);
+  free_tensor(out);
+}
+
+TEST(ActivationTest, softmaxEmptyTest) {
+  // define input dimensions
+
+  unsigned int batches = 100;
+  unsigned int size = 256;
+
+  // create input tensors
+  Tensor X = create_tensor2(batches, size);
+
+  // relu
+  Tensor out = softmax(X);
+
+  // free input and output tensors
+  free_tensor(X);
   free_tensor(out);
 }
 

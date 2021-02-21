@@ -8,6 +8,11 @@ extern "C" {
 #include "tensor.h"
 
 /*!
+ * \brief The euler number e.
+ */
+const static float E = 2.7182818284590452353602874f;
+
+/*!
  * \brief A 2D convolution.
  * \param X The input tensor.
  * \param w The weight tensor.
@@ -31,21 +36,26 @@ Tensor conv2d(Tensor X, Tensor w, Tensor b, unsigned int stride_rows,
 Tensor dense(Tensor X, Tensor w, Tensor b);
 
 /*!
- * \brief The ReLU implementation.
+ * \brief The ReLU implementation. Expects a 2D tensor with the number of
+ * batches in the first dimension.
  * \param X The input tensor.
- * \return The output tensor.
+ * \return The output
+ * tensor.
  */
 Tensor relu(Tensor X);
 
 /*!
- * \brief The sigmoid implementation.
+ * \brief The sigmoid implementation. Expects a 2D tensor with the number of
+ * batches in the first dimension.
  * \param X The input tensor.
- * \return The output tensor.
+ * \return The output
+ * tensor.
  */
 Tensor sigmoid(Tensor X);
 
 /*!
- * \brief The softmax implementation.
+ * \brief The softmax implementation. Expects a 2D tensor with the number of
+ * batches in the first dimension.
  * \param X The input tensor.
  * \return The output tensor.
  */
