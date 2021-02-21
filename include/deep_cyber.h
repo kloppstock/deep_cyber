@@ -8,11 +8,6 @@ extern "C" {
 #include "tensor.h"
 
 /*!
- * \brief The euler number e.
- */
-const static float E = 2.7182818284590452353602874f;
-
-/*!
  * \brief A 2D convolution.
  * \param X The input tensor.
  * \param w The weight tensor.
@@ -23,8 +18,8 @@ const static float E = 2.7182818284590452353602874f;
  * \param groups The number of groups.
  * \return The output tensor.
  */
-Tensor conv2d(Tensor X, Tensor w, Tensor b, unsigned int stride_rows,
-              unsigned int stride_cols, char padding, unsigned int groups);
+Tensor conv2d(Tensor X, Tensor w, Tensor b, uint32_t stride_rows,
+              uint32_t stride_cols, char padding, uint32_t groups);
 
 /*!
  * \brief The dense layer implementation
@@ -39,8 +34,7 @@ Tensor dense(Tensor X, Tensor w, Tensor b);
  * \brief The ReLU implementation. Expects a 2D tensor with the number of
  * batches in the first dimension.
  * \param X The input tensor.
- * \return The output
- * tensor.
+ * \return The output tensor.
  */
 Tensor relu(Tensor X);
 
@@ -48,8 +42,7 @@ Tensor relu(Tensor X);
  * \brief The sigmoid implementation. Expects a 2D tensor with the number of
  * batches in the first dimension.
  * \param X The input tensor.
- * \return The output
- * tensor.
+ * \return The output tensor.
  */
 Tensor sigmoid(Tensor X);
 
@@ -71,8 +64,8 @@ Tensor softmax(Tensor X);
  * \param padding The padding (0 = zero padding, same otherwise).
  * \return The output tensor.
  */
-Tensor maxpool2d(Tensor X, unsigned int pool_rows, unsigned int pool_cols,
-                 unsigned int stride_rows, unsigned int stride_cols,
+Tensor maxpool2d(Tensor X, uint32_t pool_rows, uint32_t pool_cols,
+                 uint32_t stride_rows, uint32_t stride_cols,
                  char padding);
 
 /*!
@@ -85,8 +78,8 @@ Tensor maxpool2d(Tensor X, unsigned int pool_rows, unsigned int pool_cols,
  * \param padding The padding (0 = zero padding, same otherwise).
  * \return The output tensor.
  */
-Tensor avgpool2d(Tensor X, unsigned int pool_rows, unsigned int pool_cols,
-                 unsigned int stride_rows, unsigned int stride_cols,
+Tensor avgpool2d(Tensor X, uint32_t pool_rows, uint32_t pool_cols,
+                 uint32_t stride_rows, uint32_t stride_cols,
                  char padding);
 
 #ifdef __cplusplus

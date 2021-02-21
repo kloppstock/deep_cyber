@@ -4,14 +4,14 @@
 /* general dense layer implementation */
 Tensor dense(Tensor X, Tensor w, Tensor b) {
   /* extract parameters */
-  unsigned int batches = X.c;
-  unsigned int size = X.d;
-  unsigned int w_s = w.c;
-  unsigned int units = w.d;
+  uint32_t batches = X.c;
+  uint32_t size = X.d;
+  uint32_t w_s = w.c;
+  uint32_t units = w.d;
 
   Tensor out = create_tensor2(batches, units);
 
-  unsigned int i, j, k;
+  uint32_t i, j, k;
 
   assert((size == w_s) && "Error: Input and weight size doesn't match!\n");
 
