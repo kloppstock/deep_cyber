@@ -34,7 +34,7 @@ Tensor sigmoid(Tensor X) {
     for (bi = 0; bi < X.b; ++bi)
       for (ci = 0; ci < X.c; ++ci)
         for (di = 0; di < X.d; ++di)
-          AT(out, ai, bi, ci, di) = 1.f / (1 + pow(E, -AT(X, ai, bi, ci, di)));
+          AT(out, ai, bi, ci, di) = 1.f / (1 + powf(E, -AT(X, ai, bi, ci, di)));
 
   return out;
 }
@@ -42,22 +42,58 @@ Tensor sigmoid(Tensor X) {
 /* softmax */
 Tensor softmax(Tensor X) {
   /* extract inputs */
-    unsigned int batches = X.c;
-    unsigned int cells = X.d;
+  unsigned int batches = X.c;
+  unsigned int cells = X.d;
 
-  Tensor out = create_tensor2(X.a, X.b);
+  Tensor out = create_tensor2(batches, cells);
 
   unsigned int i, j;
 
   /* calculate sum of exponentials */
-  for(i = 0; i < batches; ++i)
-      for(j = 0; j < cells; ++j)
-          AT2(out, i, cells - 1) += pow(E, AT2(X, i, j));
+  for (i = 0; i < batches; ++i)
+    for (j = 0; j < cells; ++j)
+      if (j == 0)
+        AT2(out, i, cells - 1) = powf(E, AT2(X, i, j));
+      else
+        AT2(out, i, cells - 1) += powf(E, AT2(X, i, j));
 
   /* activate */
   for (i = 0; i < batches; ++i)
     for (j = 0; j < cells; ++j)
-            AT2(out, i, j) = pow(E, AT2(X, i, cells - 1));
+      AT2(out, i, j) = AT2(out, i, cells - 1);//pow((double)E, (double)AT2(X, i, j));// / AT2(out, i, cells - 1);
 
   return out;
 }
+
+/*
+Tensor softmax(Tensor X) {
+  /* extract inputs * /
+  unsigned int batches = X.c;
+  unsigned int cells = X.d;
+
+  Tensor out = create_tensor2(batches, cells);
+
+  unsigned int i, j;
+
+  /* calculate sum of exponentials * /
+  for (i = 0; i < batches; ++i) {
+    for (j = 0; j < cells; ++j) {
+      if (j != cells - 1)
+        AT2(out, i, j) = pow(E, AT2(X, i, j));
+      if (j == 0)
+        AT2(out, i, cells - 1) = pow(E, AT2(X, i, j));
+      else
+        AT2(out, i, cells - 1) += pow(E, AT2(X, i, j));
+    }
+  }
+
+  /* activate * /
+  for (i = 0; i < batches; ++i)
+    for (j = 0; j < cells; ++j)
+      if (j < cells - 1)
+        AT2(out, i, j) /= AT2(out, i, cells - 1);
+      else
+        AT2(out, i, j) = pow(E, AT2(X, i, j)) / AT2(out, i, cells - 1);
+
+  return out;
+}*/
