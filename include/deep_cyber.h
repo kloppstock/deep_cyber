@@ -1,92 +1,86 @@
-#ifndef DEEP_SHIT_H
-#define DEEP_SHIT_H
+#ifndef CONV2D_H
+#define CONV2D_H
 
-#include <stdint.h>
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-typedef struct matrix {
-  uint16_t width, height, channels;
-  float *data;
-} matrix;
+#include "tensor.h"
 
-matrix alloc_matrix(uint16_t width, uint16_t height, uint16_t channels);
-void free_matrix(matrix);
+/*!
+ * \brief A 2D convolution.
+ * \param X The input tensor.
+ * \param w The weight tensor.
+ * \param b The bias tensor.
+ * \param stride_rows The number of rows to stride.
+ * \param stride_cols The number of columns to stride.
+ * \param padding The padding (0 = zero padding, same otherwise).
+ * \param groups The number of groups.
+ * \return The output tensor.
+ */
+Tensor conv2d(Tensor X, Tensor w, Tensor b, unsigned int stride_rows,
+              unsigned int stride_cols, char padding, unsigned int groups);
 
-typedef struct convolutional_layer{
-  uint16_t width, height, channels;
-  uint8_t size, stride, filters;
-  bool padding;
+/*!
+ * \brief The dense layer implementation
+ * \param X The input tensor.
+ * \param w The weight tensor.
+ * \param b The bias tensor.
+ * \return The output tensor.
+ */
+Tensor dense(Tensor X, Tensor w, Tensor b);
 
-  float *weigths;
-  float *biases;
+/*!
+ * \brief The ReLU implementation.
+ * \param X The input tensor.
+ * \return The output tensor.
+ */
+Tensor relu(Tensor X);
 
-  void run(matrix, convolutional_layer, matrix);
-  void (*activate)(matrix);
-} convolutional_layer;
+/*!
+ * \brief The sigmoid implementation.
+ * \param X The input tensor.
+ * \return The output tensor.
+ */
+Tensor sigmoid(Tensor X);
 
-convolutional_layer alloc_convolutional_layer(uint16_t width, uint16_t height, uint16_t channels,
-                  uint8_t size, uint8_t stride, uint8_t filters, bool padding);
-void free_convolutional_layer(convolutional_layer);
+/*!
+ * \brief The softmax implementation.
+ * \param X The input tensor.
+ * \return The output tensor.
+ */
+Tensor softmax(Tensor X);
 
-typedef struct connected_layer{
-  uint16_t width, height, channels;
-  uint8_t size, stride, filters;
-  bool padding;
+/*!
+ * \brief The 2D max pooling layer implementation.
+ * \param X The input tensor.
+ * \param pool_rows The number of rows to pool.
+ * \param pool_cols The number of columns to pool.
+ * \param stride_rows The number of rows to stride.
+ * \param stride_cols The number of columns to stride.
+ * \param padding The padding (0 = zero padding, same otherwise).
+ * \return The output tensor.
+ */
+Tensor maxpool2d(Tensor X, unsigned int pool_rows, unsigned int pool_cols,
+                 unsigned int stride_rows, unsigned int stride_cols,
+                 char padding);
 
-  float *weigths;
-  float *biases;
+/*!
+ * \brief The 2D average pooling layer implementation.
+ * \param X The input tensor.
+ * \param pool_rows The number of rows to pool.
+ * \param pool_cols The number of columns to pool.
+ * \param stride_rows The number of rows to stride.
+ * \param stride_cols The number of columns to stride.
+ * \param padding The padding (0 = zero padding, same otherwise).
+ * \return The output tensor.
+ */
+Tensor avgpool2d(Tensor X, unsigned int pool_rows, unsigned int pool_cols,
+                 unsigned int stride_rows, unsigned int stride_cols,
+                 char padding);
 
-  void run(matrix, connected_layer, matrix);
-  void (*activate)(matrix);
-} connected_layer;
+#ifdef __cplusplus
+}
+#endif
 
-connected_layer alloc_connected_layer(uint16_t width, uint16_t height, uint16_t channels,
-                  uint8_t size, uint8_t stride, uint8_t filters, bool padding);
-void free_connected_layer(connected_layer);
-
-typedef struct pooling_layer {
-  uint8_t size, stride;
-
-  void (*pool)(matrix, pooling_layer, matrix);
-} pooling_layer;
-
-typedef struct connection_layer {
-    void concat(matrix, matrix, matrix);
-    void add(matrix, matrix, matrix);
-} connection_layer;
-
-typedef enum LAYER_TYPE {
-    CONVOLUTION,
-    CONNECTED,
-    POOLING,
-    CONNECTION
-} LAYER_TYPE;
-
-typedef struct layer {
-    matrix in, out;
-
-    LAYER_TYPE type;
-    union {
-        convolutional_layer convolution;
-        connected_layer connected;
-        pooling_layer pool;
-        connection_layer connection;
-    };
-
-    void run(layer);
-} layer;
-
-layer create_convolution(convolutional_layer);
-layer create_connected(connected_layer);
-layer create_pooling(pooling_layer);
-layer create_connection(connection_layer);
-void free_layer(layer);
-
-typedef struct net {
-    uint16_t n;
-    layer* layers;
-} net;
-
-net allocate_net(uint16_t);
-void free_net(net);
-
-#endif // DEEP_SHIT_H
+#endif // CONV2D_H

@@ -1,5 +1,5 @@
+#include "../include/deep_cyber.h"
 #include "../include/tensor.h"
-#include "../include/conv2d.h"
 #include <gtest/gtest.h>
 
 /*
@@ -152,141 +152,141 @@ TEST(TensorTest, reshape1Test) {
 
 // at
 TEST(TensorTest, atTest) {
-  uint8_t a = 1;
-  uint8_t b = 2;
-  uint8_t c = 3;
-  uint8_t d = 4;
+  unsigned int a = 1;
+  unsigned int b = 2;
+  unsigned int c = 3;
+  unsigned int d = 4;
 
   Tensor t = create_tensor(a, b, c, d);
 
   float i = 0.f;
 
-  for (uint8_t ai = 0; ai < a; ++ai)
-    for (uint8_t bi = 0; bi < b; ++bi)
-      for (uint8_t ci = 0; ci < c; ++ci)
-        for (uint8_t di = 0; di < d; ++di)
+  for (unsigned int ai = 0; ai < a; ++ai)
+    for (unsigned int bi = 0; bi < b; ++bi)
+      for (unsigned int ci = 0; ci < c; ++ci)
+        for (unsigned int di = 0; di < d; ++di)
           *at(&t, ai, bi, ci, di) = i++;
 
   i = 0;
 
-  for (uint8_t ai = 0; ai < a; ++ai)
-    for (uint8_t bi = 0; bi < b; ++bi)
-      for (uint8_t ci = 0; ci < c; ++ci)
-        for (uint8_t di = 0; di < d; ++di)
+  for (unsigned int ai = 0; ai < a; ++ai)
+    for (unsigned int bi = 0; bi < b; ++bi)
+      for (unsigned int ci = 0; ci < c; ++ci)
+        for (unsigned int di = 0; di < d; ++di)
           EXPECT_EQ(*at(&t, ai, bi, ci, di), i++);
 
   free_tensor(t);
 }
 
 TEST(TensorTest, atContentsTest) {
-  uint8_t a = 1;
-  uint8_t b = 2;
-  uint8_t c = 3;
-  uint8_t d = 4;
+  unsigned int a = 1;
+  unsigned int b = 2;
+  unsigned int c = 3;
+  unsigned int d = 4;
 
   Tensor t = create_tensor(a, b, c, d);
 
   float i = 0.f;
 
-  for (uint8_t ai = 0; ai < a; ++ai)
-    for (uint8_t bi = 0; bi < b; ++bi)
-      for (uint8_t ci = 0; ci < c; ++ci)
-        for (uint8_t di = 0; di < d; ++di)
+  for (unsigned int ai = 0; ai < a; ++ai)
+    for (unsigned int bi = 0; bi < b; ++bi)
+      for (unsigned int ci = 0; ci < c; ++ci)
+        for (unsigned int di = 0; di < d; ++di)
           *at(&t, ai, bi, ci, di) = i++;
 
   i = 0;
 
-  for (uint16_t j = 0; j < a * b * c * d; ++j)
+  for (unsigned int j = 0; j < a * b * c * d; ++j)
     EXPECT_EQ(t.data[j], i++);
 
   free_tensor(t);
 }
 
 TEST(TensorTest, at4Test) {
-  uint8_t a = 1;
-  uint8_t b = 2;
-  uint8_t c = 3;
-  uint8_t d = 4;
+  unsigned int a = 1;
+  unsigned int b = 2;
+  unsigned int c = 3;
+  unsigned int d = 4;
 
   Tensor t = create_tensor4(a, b, c, d);
 
   float i = 0.f;
 
-  for (uint8_t ai = 0; ai < a; ++ai)
-    for (uint8_t bi = 0; bi < b; ++bi)
-      for (uint8_t ci = 0; ci < c; ++ci)
-        for (uint8_t di = 0; di < d; ++di)
+  for (unsigned int ai = 0; ai < a; ++ai)
+    for (unsigned int bi = 0; bi < b; ++bi)
+      for (unsigned int ci = 0; ci < c; ++ci)
+        for (unsigned int di = 0; di < d; ++di)
           *at4(&t, ai, bi, ci, di) = i++;
 
   i = 0;
 
-  for (uint8_t ai = 0; ai < a; ++ai)
-    for (uint8_t bi = 0; bi < b; ++bi)
-      for (uint8_t ci = 0; ci < c; ++ci)
-        for (uint8_t di = 0; di < d; ++di)
+  for (unsigned int ai = 0; ai < a; ++ai)
+    for (unsigned int bi = 0; bi < b; ++bi)
+      for (unsigned int ci = 0; ci < c; ++ci)
+        for (unsigned int di = 0; di < d; ++di)
           EXPECT_EQ(*at4(&t, ai, bi, ci, di), i++);
 
   free_tensor(t);
 }
 
 TEST(TensorTest, at3Test) {
-  uint8_t a = 1;
-  uint8_t b = 2;
-  uint8_t c = 3;
+  unsigned int a = 1;
+  unsigned int b = 2;
+  unsigned int c = 3;
 
   Tensor t = create_tensor3(a, b, c);
 
   float i = 0.f;
 
-  for (uint8_t ai = 0; ai < a; ++ai)
-    for (uint8_t bi = 0; bi < b; ++bi)
-      for (uint8_t ci = 0; ci < c; ++ci)
+  for (unsigned int ai = 0; ai < a; ++ai)
+    for (unsigned int bi = 0; bi < b; ++bi)
+      for (unsigned int ci = 0; ci < c; ++ci)
         *at3(&t, ai, bi, ci) = i++;
 
   i = 0;
 
-  for (uint8_t ai = 0; ai < a; ++ai)
-    for (uint8_t bi = 0; bi < b; ++bi)
-      for (uint8_t ci = 0; ci < c; ++ci)
+  for (unsigned int ai = 0; ai < a; ++ai)
+    for (unsigned int bi = 0; bi < b; ++bi)
+      for (unsigned int ci = 0; ci < c; ++ci)
         EXPECT_EQ(*at3(&t, ai, bi, ci), i++);
 
   free_tensor(t);
 }
 
 TEST(TensorTest, at2Test) {
-  uint8_t a = 2;
-  uint8_t b = 3;
+  unsigned int a = 2;
+  unsigned int b = 3;
 
   Tensor t = create_tensor2(a, b);
 
   float i = 0.f;
 
-  for (uint8_t ai = 0; ai < a; ++ai)
-    for (uint8_t bi = 0; bi < b; ++bi)
+  for (unsigned int ai = 0; ai < a; ++ai)
+    for (unsigned int bi = 0; bi < b; ++bi)
       *at2(&t, ai, bi) = i++;
 
   i = 0;
 
-  for (uint8_t ai = 0; ai < a; ++ai)
-    for (uint8_t bi = 0; bi < b; ++bi)
+  for (unsigned int ai = 0; ai < a; ++ai)
+    for (unsigned int bi = 0; bi < b; ++bi)
       EXPECT_EQ(*at2(&t, ai, bi), i++);
 
   free_tensor(t);
 }
 
 TEST(TensorTest, at1Test) {
-  uint8_t a = 2;
+  unsigned int a = 2;
 
   Tensor t = create_tensor1(a);
 
   float i = 0.f;
 
-  for (uint8_t ai = 0; ai < a; ++ai)
+  for (unsigned int ai = 0; ai < a; ++ai)
     *at1(&t, ai) = i++;
 
   i = 0;
 
-  for (uint8_t ai = 0; ai < a; ++ai)
+  for (unsigned int ai = 0; ai < a; ++ai)
     EXPECT_EQ(*at1(&t, ai), i++);
 
   free_tensor(t);
@@ -296,28 +296,97 @@ TEST(TensorTest, at1Test) {
  * Conv2D tests
  */
 
-TEST(TensorTest, conv2dEmptyTest) {
-    // define input dimensions
+TEST(Conv2DTest, conv2dEmptyTest) {
+  // define input dimensions
 
-    uint16_t a = 2;
-    uint16_t b = 128;
-    uint16_t c = 128;
-    uint16_t d = 4;
-    uint16_t filters = 5;
-    uint16_t stride_cols = 2;
-    uint16_t stride_rows = 2;
-    uint16_t kernel_cols = 3;
-    uint16_t kernel_rows = 3;
-    uint16_t groups = 1;
-    uint8_t padding = 0;
+  unsigned int a = 2;
+  unsigned int b = 128;
+  unsigned int c = 128;
+  unsigned int d = 4;
+  unsigned int filters = 5;
+  unsigned int stride_cols = 2;
+  unsigned int stride_rows = 2;
+  unsigned int kernel_cols = 3;
+  unsigned int kernel_rows = 3;
+  unsigned int groups = 1;
+  unsigned int padding = 0;
 
-    // create input tensors
+  // create input tensors
   Tensor X = create_tensor(a, b, c, d);
   Tensor weights = create_tensor(kernel_rows, kernel_cols, d, filters);
   Tensor bias = create_tensor1(filters);
 
   // conv2d
-  Tensor out = conv2d(X, weights, bias, stride_rows, stride_cols, padding, groups);
+  Tensor out =
+      conv2d(X, weights, bias, stride_rows, stride_cols, padding, groups);
+
+  // free input and output tensors
+  free_tensor(X);
+  free_tensor(weights);
+  free_tensor(bias);
+  free_tensor(out);
+}
+
+TEST(Conv2DTest, bigConv2dEmptyTest) {
+  // define input dimensions
+
+  unsigned int a = 4;
+  unsigned int b = 1;
+  unsigned int c = 1;
+  unsigned int d = 32768;
+  unsigned int filters = 1;
+  unsigned int stride_cols = 1;
+  unsigned int stride_rows = 1;
+  unsigned int kernel_cols = 1;
+  unsigned int kernel_rows = 1;
+  unsigned int groups = 1;
+  unsigned int padding = 0;
+
+  // create input tensors
+  Tensor X = create_tensor(a, b, c, d);
+  for (unsigned int i = 0; i < a * b * c * d; ++i)
+    X.data[i] = 1.f;
+
+  Tensor weights = create_tensor(kernel_rows, kernel_cols, d, filters);
+  for (unsigned int i = 0; i < kernel_rows * kernel_cols * d * filters; ++i)
+    weights.data[i] = 1.f;
+
+  Tensor bias = create_tensor1(filters);
+  for (unsigned int i = 0; i < filters; ++i)
+    bias.data[i] = 1.f;
+
+  // conv2d
+  Tensor out =
+      conv2d(X, weights, bias, stride_rows, stride_cols, padding, groups);
+
+  EXPECT_EQ(AT(out, 0, 0, 0, 0), 32768.f + 1.f);
+  EXPECT_EQ(AT(out, 1, 0, 0, 0), 32768.f + 1.f);
+
+  // free input and output tensors
+  free_tensor(X);
+  free_tensor(weights);
+  free_tensor(bias);
+  free_tensor(out);
+}
+
+/*
+ * Dense tests
+ */
+TEST(DenseTest, denseEmptyTest) {
+  // define input dimensions
+
+  unsigned int batches = 5;
+  unsigned int size = 256;
+  unsigned int units = 3;
+
+  // create input tensors
+  Tensor X = create_tensor2(batches, size);
+  Tensor weights = create_tensor2(size, units);
+  Tensor bias = create_tensor1(units);
+
+  // conv2d
+  Tensor out =
+      dense(X, weights, bias);
 
   // free input and output tensors
   free_tensor(X);
