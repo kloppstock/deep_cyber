@@ -5,8 +5,8 @@
 Tensor conv2d(Tensor X, Tensor w, Tensor b, uint32_t stride_rows,
               uint32_t stride_cols, char padding, uint32_t groups) {
   /* extract parameters */
-  int32_t kernel_rows = w.a;
-  int32_t kernel_cols = w.b;
+  uint32_t kernel_rows = w.a;
+  uint32_t kernel_cols = w.b;
   uint32_t channels_in = w.c;
   uint32_t channels_out = w.d;
 
@@ -24,8 +24,8 @@ Tensor conv2d(Tensor X, Tensor w, Tensor b, uint32_t stride_rows,
 
   /* same padding */
   if (padding) {
-    uint32_t rows_offset = 2; /*kernel_rows / 4; */
-    uint32_t cols_offset = 2; /*kernel_cols / 4; */
+    uint32_t rows_offset = kernel_rows / 2;
+    uint32_t cols_offset = kernel_cols / 2;
 
     /* calculate output dimensions and create output tensor */
     uint32_t rows_out = (rows_in + stride_rows - 1) / stride_rows;
@@ -46,15 +46,15 @@ Tensor conv2d(Tensor X, Tensor w, Tensor b, uint32_t stride_rows,
     for (i = 0; i < batch; ++i) {
       for (y = 0; y < rows_out; ++y) {
         for (x = 0; x < cols_out; ++x) {
-          int sy = y * stride_rows - rows_offset;
-          int sx = x * stride_cols - cols_offset;
+          int32_t sy = y * stride_rows - rows_offset;
+          int32_t sx = x * stride_cols - cols_offset;
           for (g = 0; g < groups; ++g) {
             uint32_t gc = g * grouped_channels_out;
             for (co = 0; co < grouped_channels_out; ++co) {
               for (ci = 0; ci < channels_in; ++ci) {
-                int ky, kx;
-                for (ky = sy; ky < sy + kernel_rows; ++ky) {
-                  for (kx = sx; kx < sx + kernel_cols; ++kx) {
+                int32_t ky, kx;
+                for (ky = sy; ky < sy + (int32_t)kernel_rows; ++ky) {
+                  for (kx = sx; kx < sx + (int32_t)kernel_cols; ++kx) {
                     if (ky >= 0 && ky < rows_in && kx >= 0 && kx < cols_in) {
                       AT4(out, i, y, x, gc + co) +=
                           AT4(X, i, ky, kx, gc + ci) *
@@ -92,13 +92,13 @@ Tensor conv2d(Tensor X, Tensor w, Tensor b, uint32_t stride_rows,
     for (i = 0; i < batch; ++i) {
       for (y = 0; y < rows_out; ++y) {
         for (x = 0; x < cols_out; ++x) {
-          int sy = y * stride_rows;
-          int sx = x * stride_cols;
+          uint32_t sy = y * stride_rows;
+          uint32_t sx = x * stride_cols;
           for (g = 0; g < groups; ++g) {
             uint32_t gc = g * grouped_channels_out;
             for (co = 0; co < grouped_channels_out; ++co) {
               for (ci = 0; ci < channels_in; ++ci) {
-                int ky, kx;
+                uint32_t ky, kx;
                 for (ky = sy; ky < sy + kernel_rows; ++ky) {
                   for (kx = sx; kx < sx + kernel_cols; ++kx) {
                     AT4(out, i, y, x, gc + co) +=
