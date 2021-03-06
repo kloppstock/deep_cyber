@@ -1,3 +1,4 @@
+#include "../cifar10/cifar10.h"
 #include "../include/deep_cyber.h"
 #include "../include/tensor.h"
 #include <gtest/gtest.h>
@@ -591,6 +592,31 @@ TEST(PoolingTest, avgpool2dSpecializedEmptyTest) {
   // conv2d
   Tensor out =
       avgpool2d(X, pool_rows, pool_cols, stride_rows, stride_cols, padding);
+
+  // free input and output tensors
+  free_tensor(X);
+  free_tensor(out);
+}
+
+/*
+ * CIFAR10 tests
+ */
+
+TEST(Cifar10Test, cifar10EmptyTest) {
+  // define input dimensions
+
+  unsigned int a = 10;
+  unsigned int b = 32;
+  unsigned int c = 32;
+  unsigned int d = 3;
+
+  // create input tensors
+  Tensor X = create_tensor(a, b, c, d);
+  for (unsigned int i = 0; i < a * b * c * d; ++i)
+    X.data[i] = 1.f;
+
+  // conv2d
+  Tensor out = cifar10(X);
 
   // free input and output tensors
   free_tensor(X);
