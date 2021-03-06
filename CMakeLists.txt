@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(deep_cyber VERSION 0.0.0)
+project(deep_cyber VERSION 1.0.0)
 
 # the library itself
 add_library(${CMAKE_PROJECT_NAME} SHARED include/int.h src/tensor.c include/tensor.h include/deep_cyber.h src/conv2d.c src/dense.c src/activation.c src/pooling.c)
@@ -12,9 +12,9 @@ target_include_directories(${CMAKE_PROJECT_NAME}_cifar10 INTERFACE cifar10)
 target_link_libraries(${CMAKE_PROJECT_NAME}_cifar10 PUBLIC ${CMAKE_PROJECT_NAME})
 
 # the main file
-add_executable(${CMAKE_PROJECT_NAME}_main main.c)
+add_executable(${CMAKE_PROJECT_NAME}_main main.c cifar10_data.h cifar10_data.c)
 target_include_directories(${CMAKE_PROJECT_NAME}_main INTERFACE include)
-target_link_libraries(${CMAKE_PROJECT_NAME}_main PRIVATE ${CMAKE_PROJECT_NAME})
+target_link_libraries(${CMAKE_PROJECT_NAME}_main PRIVATE ${CMAKE_PROJECT_NAME}_cifar10)
 
 # Download and unpack googletest at configure time
 configure_file(CMakeLists.txt.in googletest-download/CMakeLists.txt)
