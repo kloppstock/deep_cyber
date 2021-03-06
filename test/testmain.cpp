@@ -513,6 +513,34 @@ TEST(PoolingTest, maxpool2dEmptyTest) {
   free_tensor(out);
 }
 
+TEST(PoolingTest, maxpool2dSpecializedEmptyTest) {
+  // define input dimensions
+
+  unsigned int a = 2;
+  unsigned int b = 128;
+  unsigned int c = 128;
+  unsigned int d = 4;
+
+  unsigned int pool_cols = 2;
+  unsigned int pool_rows = 2;
+  unsigned int stride_cols = 2;
+  unsigned int stride_rows = 2;
+  unsigned int padding = 1;
+
+  // create input tensors
+  Tensor X = create_tensor(a, b, c, d);
+  for (unsigned int i = 0; i < a * b * c * d; ++i)
+    X.data[i] = 1.f;
+
+  // conv2d
+  Tensor out =
+      maxpool2d(X, pool_rows, pool_cols, stride_rows, stride_cols, padding);
+
+  // free input and output tensors
+  free_tensor(X);
+  free_tensor(out);
+}
+
 TEST(PoolingTest, avgpool2dEmptyTest) {
   // define input dimensions
 
@@ -525,6 +553,34 @@ TEST(PoolingTest, avgpool2dEmptyTest) {
   unsigned int pool_rows = 3;
   unsigned int stride_cols = 4;
   unsigned int stride_rows = 5;
+  unsigned int padding = 0;
+
+  // create input tensors
+  Tensor X = create_tensor(a, b, c, d);
+  for (unsigned int i = 0; i < a * b * c * d; ++i)
+    X.data[i] = 1.f;
+
+  // conv2d
+  Tensor out =
+      avgpool2d(X, pool_rows, pool_cols, stride_rows, stride_cols, padding);
+
+  // free input and output tensors
+  free_tensor(X);
+  free_tensor(out);
+}
+
+TEST(PoolingTest, avgpool2dSpecializedEmptyTest) {
+  // define input dimensions
+
+  unsigned int a = 2;
+  unsigned int b = 128;
+  unsigned int c = 128;
+  unsigned int d = 4;
+
+  unsigned int pool_cols = 2;
+  unsigned int pool_rows = 2;
+  unsigned int stride_cols = 2;
+  unsigned int stride_rows = 2;
   unsigned int padding = 0;
 
   // create input tensors
